@@ -1,115 +1,79 @@
-import React from 'react';
-import classes from './Navbar.module.css';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import img from '../../assets/Logo.png';
-import { useState } from 'react';
+import classes from './Navbar.module.css';
 
 const Navbar = () => {
-	const [active, setActive] = useState(false);
+
+	const [open, setOpen] = useState(false);
+
+	const changeOpen = () => {
+		if (open) {
+			setOpen(false);
+		} else {
+			setOpen(true);
+		}
+	}
+
 	return (
 		<>
-			<nav className={classes.navbar}>
-				<div className={classes.inner_navbar}>
-					<NavLink to="/">
-						<div className={classes.brand}>
-							<div className={classes.brand_logo}>
-								<img src={img} alt="logo" className={classes.logo} />
+			<header className={classes.header}>
+				<nav className={classes.nav}>
+					<NavLink to='/'>
+
+						{!open &&
+							<div className={classes.brand}>
+								<div className={classes.brand_logo}>
+									<img src={img} alt="logo" className={classes.logo} />
+								</div>
+								<span className={classes.brand__title}>GrabBit</span>
 							</div>
-							<span className={classes.brand_title}>GrabBit</span>
-						</div>
-					</NavLink>
-					<ul
-						className={
-							active
-								? `${classes.navbar_items} ${classes.navbar_mitems}`
-								: `${classes.navbar_items}`
 						}
-					>
-						<li
-							className={`${classes.navbar_item} `}
-							onClick={() => {
-								setActive((prevValue) => !prevValue);
-							}}
-						>
-							<NavLink to="/" className={classes.link_text}>
-								Home
+
+					</NavLink>
+
+					<div className={!open ? `${classes.nav__menu} ${classes.menu__close}` : `${classes.nav__menu} ${classes.menu__open}`}>
+						<ul className={`${classes.nav__list} ${classes.grid}`}>
+							<NavLink to="/">
+								<li className={classes.nav__item}>
+									<i className="uil uil-estate" id={classes.nav__icon}></i> Home
+								</li>
 							</NavLink>
-						</li>
-						<li
-							className={`${classes.navbar_item} `}
-							onClick={() => {
-								setActive((prevValue) => !prevValue);
-							}}
-						>
-							<NavLink to="/opportunities" className={classes.link_text}>
-								Opportunities
+							<NavLink to="/opportunities">
+								<li className={classes.nav__item}>
+									<i className="uil uil-bag" id={classes.nav__icon}></i> Opportunities
+								</li>
 							</NavLink>
-						</li>
-						<li
-							className={`${classes.navbar_item} `}
-							onClick={() => {
-								setActive((prevValue) => !prevValue);
-							}}
-						>
-							<NavLink to="/podcasts" className={classes.link_text}>
-								Podcasts
+							<NavLink to="/podcasts">
+								<li className={classes.nav__item}>
+									<i className="uil uil-megaphone" id={classes.nav__icon}></i> Podcasts
+								</li>
 							</NavLink>
-						</li>
-						<li
-							className={`${classes.navbar_item} `}
-							onClick={() => {
-								setActive((prevValue) => !prevValue);
-							}}
-						>
-							<NavLink to="/team" className={classes.link_text}>
-								About Us
+							<NavLink to="/team">
+								<li className={classes.nav__item}>
+									<i className="uil uil-users-alt" id={classes.nav__icon}></i> About us
+								</li>
 							</NavLink>
-						</li>
-						<li
-							className={`${classes.navbar_item} `}
-							onClick={() => {
-								setActive((prevValue) => !prevValue);
-							}}
-						>
-							<NavLink to="/contact" className={classes.link_text}>
-								Contact
+							<NavLink to="/contact">
+								<li className={classes.nav__item}>
+									<i className="uil uil-voicemail-rectangle" id={classes.nav__icon}></i> Contact
+								</li>
 							</NavLink>
-						</li>
-						<li className={classes.links}></li>
-					</ul>
-					<div
-						className={classes.hamburger}
-						onClick={() => {
-							setActive((prevValue) => !prevValue);
-						}}
-					>
-						<svg
-							className={
-								active
-									? `${classes.ham} ${classes.hamRotate} ${classes.ham1} ${classes.active}`
-									: `${classes.ham} ${classes.hamRotate} ${classes.ham1}`
-							}
-							viewBox="0 0 100 100"
-							width="80"
-						>
-							<path
-								className={`${classes.line} ${classes.top}`}
-								d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40"
-							/>
-							<path
-								className={`${classes.line} ${classes.middle}`}
-								d="m 30,50 h 40"
-							/>
-							<path
-								className={`${classes.line} ${classes.bottom}`}
-								d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40"
-							/>
-						</svg>
+						</ul>
+						{open &&
+							<i className="uil uil-times" id={classes.nav__close} onClick={() => changeOpen()}></i>
+						}
 					</div>
-				</div>
-			</nav>
+
+					{!open &&
+						<i className="uil uil-apps" id={classes.nav__toggle__icon} onClick={() => changeOpen()}></i>
+					}
+
+
+				</nav>
+			</header>
 		</>
-	);
-};
+	)
+}
 
 export default Navbar;
